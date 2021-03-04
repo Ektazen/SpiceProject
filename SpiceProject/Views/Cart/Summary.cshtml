@@ -1,0 +1,179 @@
+﻿@model SpiceProject.ViewModels.OrderDetailsCart
+@{
+    ViewBag.Title = "Summary";
+}
+
+<h2>Summary</h2>
+
+@using (Html.BeginForm("Summary", "Cart"))
+{
+    if (Model.ListCart.Count > 0)
+    {
+        <br />
+        <input id="userId" asp-for="@Model.ListCart[0].AppUserId" hidden />
+        <div class="backgroundWhiteBorder">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container">
+                        <div class="col-6">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;
+                            Order Summary
+                        </div>
+
+                        <div class="col-6 text-right">
+                            <a href="/Spice/GetShoppingCart" class="btn btn-default">Back To Cart</a>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container rounded p-2">
+                            <div class=" row">
+                                <div class="col-12 col-lg-6 pb-4">
+                                    <div class="row">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-info">PickUp Details:</span>
+                                        </h4>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="col-9" style="color:black">
+                                            @Html.TextBoxFor(e => e.OrderHeader.PickupName)
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Number</label>
+                                        </div>
+                                        <div class="col-9" style="color:black">
+                                            @Html.TextBoxFor(e => e.OrderHeader.PhoneNumber)
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Pickup Date</label>
+                                        </div>
+                                        <div class="col-9" style="color:black">
+
+                                            <input type="date" id="datepicker" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>PickUp Time</label>
+                                        </div>
+                                        <div class="col-9" style="color:black">
+                                            @Html.TextBoxFor(e => e.OrderHeader.PickUpTime)
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Instuctions</label>
+                                        </div>
+                                        <div class="col-9" style="color:black">
+                                            @Html.TextAreaFor(e => e.OrderHeader.Comments)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-5 offset-lg-1">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-info">Order Summary:</span>
+                                    </h4>
+                                    <ul class="list-group mb-3">
+                                        <!--this shows how to create and use variables here-->
+                                        @{ var total = 0.0;}
+
+                                        @foreach (var details in Model.ListCart)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="my-0">@details.MenuItem.Name</h6>
+                                                    <small class="text-muted">Quantity: @details.Count</small>
+                                                </div>
+
+                                                <span class="text-muted">$@(details.MenuItem.Price * details.Count)</span>
+                                                @{ total += (details.MenuItem.Price * details.Count); }
+                                            </li>
+                                                    }
+                                        @if (Model.OrderHeader.CouponCode != null)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div class="text-success">
+                                                    <h6 class="my-0">Promo Code</h6>
+                                                    <small class="text-success">@Model.OrderHeader.CouponCode</small>
+                                                </div>
+
+                                                <span class="text-success">-$@(total - Model.OrderHeader.OrderTotal)</span>
+                                            </li>
+                                        }
+
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <small class="text-info">Total (USD)</small>
+                                            <strong class="text-info">$@(Model.OrderHeader.OrderTotal)</strong>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12 col-md-4 offset-8">
+                                @{
+                                    var OrderTotalForStrip = Model.OrderHeader.OrderTotal * 100;
+                                }
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="/Cart/Transaction" class="btn btn-default" id="plc_btn">Pay Now</a>
+                                @*@Html.ActionLink("Place Order", "PalceOrder", "Order")*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                                    }
+                                    else
+                                    {
+        <div class="backgroundWhiteBorder">No items added to the shopping cart...</div>
+                                    }
+ }
+
+
+
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+
+    $("#plc_btn").click(function) {
+
+        alert('Order Placed..Enjoy Your Food');
+
+
+
+
+    });
+
+</script>
+
+
+

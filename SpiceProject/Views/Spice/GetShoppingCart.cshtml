@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Food.DomainLayer.ShoppingCart>
+@{
+    ViewBag.Title = "GetShoppingCart";
+}
+
+<h2>GetShoppingCart</h2>
+<form>
+    @foreach (var item in Model)
+    {
+        if (item.Count > 0)
+        {
+            <br />
+            <input id="userId" asp-for="@item.AppUserId" hidden />
+            <div class="backgroundWhiteBorder">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header bg-dark text-light ml-0 row container">
+                            <div class="col-6">
+                                <i class="fa fa-shopping-cart"></i> &nbsp;
+                                Shopping Cart
+                            </div>
+
+
+                        </div>
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="d-none d-lg-block col-lg-2 text-center py-2">
+                                    <img src="~/images/@item.MenuItem.Image" class="rounded" width="120" height="100" />
+                                </div>
+                                <div class="col-12 text-sm-center col-lg-5 text-lg-left">
+                                    <h4><strong>@item.MenuItem.Name</strong></h4>
+                                    <h4><small>@item.MenuItem.Description</small></h4>
+                                </div>
+                                <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
+                                    <div class="col-4 text-md-right" style="padding-top:5px;">
+                                        @*<h6><strong>@item.MenuItem.Price <span class="text-muted">x</span> @item.Count</strong></h6>*@
+
+                                        @*<input class="input-group-field" type="number" name="quantity" value="@item.Count">*@
+                                        @Html.Label("Total Items in cart")
+                                        @Html.DisplayFor(e => item.Count)
+
+                                    </div>
+
+
+
+                                    @*<div class="col-6 col-sm-4 col-lg-6">*@
+
+
+                                    <div class="float-right mx-1">
+                                        <a href="/Spice/Plus/@item.CartId">
+                                            <i class="glyphicon glyphicon-plus" style="color:green;border:groove"></i>
+
+                                        </a>
+                                        <a href="/Spice/Minus/@item.CartId">
+                                            <i class="glyphicon glyphicon-minus" style="color:green;border:groove"></i>
+
+                                        </a>
+
+                                        <a href="/Spice/Remove/@item.CartId">
+
+                                            <i class="glyphicon glyphicon-trash" style="color:red;border-image-width:40px"></i>
+                                        </a>
+
+                                    </div>
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr />
+        }
+    }
+
+    <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
+        <a href="index" class="btn btn-default">Continue Shopping</a>
+        <a href="/Cart/Summary" class="btn btn-default">Proceed</a>
+
+
+
+    </div>
+
+</form>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        // This button will increment the value
+        $('[data-quantity="plus"]').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('data-field');
+            // Get its current value
+            var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+            // If is not undefined
+            if (!isNaN(currentVal)) {
+                // Increment
+                $('input[name=' + fieldName + ']').val(currentVal + 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name=' + fieldName + ']').val(0);
+            }
+        });
+        // This button will decrement the value till 0
+        $('[data-quantity="minus"]').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('data-field');
+            // Get its current value
+            var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+            // If it isn't undefined or its greater than 0
+            if (!isNaN(currentVal) && currentVal > 0) {
+                // Decrement one
+                $('input[name=' + fieldName + ']').val(currentVal - 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name=' + fieldName + ']').val(0);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+<style>
+    .plus-minus-input {
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+        .plus-minus-input .input-group-field {
+            text-align: center;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            padding: 1rem;
+        }
+
+            .plus-minus-input .input-group-field::-webkit-inner-spin-button,
+            .plus-minus-input .input-group-field ::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+        .plus-minus-input .input-group-button .circle {
+            border-radius: 50%;
+            padding: 0.25em 0.8em;
+        }
+</style>

@@ -1,0 +1,47 @@
+﻿IEnumerable<Food.DomainLayer.MenuItem>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Index</h2>
+    
+
+                <table class="table">
+                    <tr>
+                        <th>Menu Id</th>
+                        <td>@Model.Id</td>
+                    </tr>
+                    <tr>
+                        <th>Menu Name</th>
+                        <td>@Model.Name</td>
+                    </tr>
+
+
+                    <tr>
+                        <th>Spiciness Name</th>
+                        <td>@Model.Spicyness</td>
+
+                    </tr>
+
+                    <tr>
+                        <th>Price</th>
+                        <td>@Model.Price</td>
+
+                    </tr>
+
+                    @{int sum = 0;
+
+
+                        sum = Convert.ToInt32(Model.Price) + sum;
+
+                    }
+                    <tr>
+                        <th>Total Price</th>
+                        <td>@sum</td>
+
+                    </tr>
+
+
+
+                </table>

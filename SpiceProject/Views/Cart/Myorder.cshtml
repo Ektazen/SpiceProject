@@ -1,0 +1,46 @@
+﻿@*@model IEnumerable<Food.DomainLayer.MenuItem>*@
+@{
+    ViewBag.Title = "Myorder";
+}
+
+
+<h2>Myorder</h2>
+
+@{
+    int sum = 0;
+}
+
+<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" > </script>  
+ <div id = "dvContents"> 
+     <table class="table table-hover" width="100%">
+         <thead>
+            
+             <tr> 
+                 <th> Menu NO </th>  
+                 <th> Menu Name </th> 
+                 <th> Image </th>  
+                 <th> Price </th>  
+                 <th> Remove </th> 
+             </tr>  
+         </thead> 
+         </table>
+     </div>
+
+@foreach (var item in (List<Food.DomainLayer.MenuItem>)Session["cart"])
+{
+    @item.Id
+}
+
+
+
+
+
+
+
+
+
+
+
+

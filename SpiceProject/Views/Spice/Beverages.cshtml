@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Food.DomainLayer.MenuItem>
+@{
+    ViewBag.Title = "Beverages";
+}
+
+<nav class="navbar navbar-expand-sm navbar-light bg-dark " style="background-color:darkolivegreen">
+    <div class="container">
+        @foreach (var v in ViewBag.coup)
+        {
+            if (v.Id == 6)
+            {
+                <p style="color:black;font-size:26px;padding-left:150px">
+                    <strong>@v.Discount</strong> % Off  Purchase over <strong>@v.MinimumAmount </strong>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                    PromoCode:<strong> @v.Name</strong>
+                </p>
+            }
+
+
+
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+
+
+
+            </div>
+        }
+    </div>
+</nav>
+<h2>Beverages</h2>
+
+<form class="form-inline" action="/spice/Apetizer">
+
+    <a href="/spice/index" class="btn btn-info" style="padding-right:30px">Show All</a>&nbsp;&nbsp;
+
+    <a href="/spice/apetizer" class="btn btn-info" style="padding-right:30px">Apetizer</a>&nbsp;&nbsp;
+    <a href="/spice/maincourse" class="btn btn-info" style="padding-right:30px">Main Course</a>&nbsp;&nbsp;
+    <a href="/spice/desert" class="btn btn-info" style="padding-right:30px">Desert</a>&nbsp;&nbsp;
+    <a href="/spice/beverages" class="btn btn-info" style="padding-right:30px">Beverages</a>
+
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Category.Name.Equals("Beverages"))
+        {
+<div class="border table-bordered col-12" style="margin-bottom:10px; margin-top:10px; padding:10px;border-color:chartreuse;width:100%">
+    <div class="row">
+        <!--anything medium or larger will only take up 3 columns anything smaller will take up the full 12-->
+        <div class="col-md-3 col-sm-12">
+            <img src="~/Images/@item.Image" width="99%" style="border-radius:5px; border:1px solid #bbb9b9;height:170px" />
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <div class="row pr-3">
+                <div class="col-8">
+                    <strong>@item.Name</strong>
+                    <label class="text-primary" style="font-size:21px; color:maroon"></label>
+                    @if (item.Spicyness == "Not_Spicy")
+                    {
+                        <img srcset="~/Images/mild.png" title="Mild" />
+                    }
+                    @if (item.Spicyness == "SPICY")
+                    {
+                        <img srcset="/images/spicy.png" title="Spicy" />
+                    }
+                    @if (item.Spicyness == "VERY_SPICY")
+                    {
+                        <img srcset="/images/veryspicy.png" title="Very Spicy" />
+                    }
+                </div>
+                <div class="col-sm-8 text-right" style="color:white">
+                    <h4>$@item.Price</h4>
+                </div>
+            </div>
+
+            <div class="row col-lg-10 text-justify d-none d-md-block">
+                <!--we want to use raw to remove the formatting that came along with the -->
+                <!--rich text box look in the Db to see example of description text-->
+                <p><strong>@Html.Raw(item.Description)</strong></p>
+            </div>
+
+            <div class="col-lg-12 text-center">
+
+                <a href="/Spice/Details/@item.Id" class="btn btn-success">Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+        }
+    }
+
+
+</form>
+
+
+

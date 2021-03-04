@@ -1,0 +1,117 @@
+﻿@model Food.DomainLayer.MenuItem
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+@using (Html.BeginForm("AddToCart", "Spice", new { menuId = Model.Id }))
+
+{
+
+    <div class="border backgroundWhite row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!--if the screen is too small put the image on top else at the bottom of this file you see we put it on the side-->
+        @*<div class="col-12 pb-4 d-md-none">
+                <img src="@Model.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
+            </div>*@
+
+        <div class="col-md-8">
+            <div class="form-group row">
+                
+                <div class="col-md-4">
+                    @Html.LabelFor(m=>m.Name)
+                   
+                </div>
+                <div class="col-md-8">
+                    <input type="text" name="AppUserId" hidden value="@ViewBag.userId" />
+                    <input asp-for="@Model.Id" hidden value="@Model.Id" name="MenuItemId" />
+
+                   
+                    @Html.DisplayFor(e=>e.Name)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Description)
+                </div>
+                <div class="col-md-8">
+                    <div class="border rounded p-2">
+                        @Html.Raw(@Model.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Price)$
+                </div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(e => e.Price)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.CategoryId)
+                </div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(e => e.Category.Name)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.SubCategoryId)
+                </div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(e => e.SubCategory.Name)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Spicyness)
+                </div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(e => e.Spicyness)
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                   
+                    @Html.ActionLink("Back to List", "Index", "Spice", new { @class = "btn btn-primary" })
+                </div>
+                <div class="col-md-4">
+
+                   
+                     <button type="submit" id="btn_add" value="Add to Cart" class="btn btn-danger form-control">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 offset-1 d-none d-md-block">
+            <img src="~/images/@Model.Image" style="width:100%" ;border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+    </div>
+}
+
+<script>
+    var food;
+    $("#btn_add").click(function () {
+
+
+
+
+        var foodID = $(this).attr('data-Id');
+        food.push(foodID);
+        $.session('Cart', food.join('-'), { path: '/' });
+        swal("Done", "Product added to cart", "success");
+
+
+
+
+
+    });
+</script>
